@@ -184,7 +184,7 @@ impl Home for MangaDex {
 		{
 			let popular_manga = popular_res?
 				.get_json::<DexResponse<Vec<DexManga>>>()
-				.map_err(|_| AidokuError::message("Failed to parse popular manga"))?
+				.map_err(|e| AidokuError::message(format!("Failed to parse popular manga: {e:?}")))?
 				.data
 				.iter()
 				.map(|value| Manga {
@@ -211,7 +211,7 @@ impl Home for MangaDex {
 		{
 			let added_manga = recent_res?
 				.get_json::<DexResponse<Vec<DexManga>>>()
-				.map_err(|_| AidokuError::message("Failed to parse recent manga"))?
+				.map_err(|e| AidokuError::message(format!("Failed to parse recent manga: {e:?}")))?
 				.data
 				.into_iter()
 				.map(|value| value.into_basic_manga().into())
